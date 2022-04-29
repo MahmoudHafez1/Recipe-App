@@ -1,0 +1,12 @@
+.customLink {
+    text-decoration: none;
+    padding: 1rem 0.5rem;
+    font-weight: 600;
+    background-color:#fff;
+    color:var(--primary);
+}
+
+.customLink:hover {
+    background-color:var(--primary);
+    color:#fff;
+}
