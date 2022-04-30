@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, InputLabel, TextareaAutosize } from "@mui/material";
+import {
+  TextField,
+  Button,
+  InputLabel,
+  TextareaAutosize,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import classes from "./NewRecipe.module.css";
@@ -10,6 +17,24 @@ import {
   updateRecipe,
 } from "../../api/recipe";
 import IngredientTable from "../../components/IngredientTable/IngredientTable";
+
+const units = [
+  "cup",
+  "teaspoon",
+  "tablespoon",
+  "bunch",
+  "cake",
+  "dash",
+  "gram",
+  "gallon",
+  "handful",
+  "liter",
+  "milliliter",
+  "ounce",
+  "packet",
+  "piece",
+  "other",
+];
 
 const NewRecipe = () => {
   const [title, setTitle] = useState<string>();
@@ -181,15 +206,20 @@ const NewRecipe = () => {
             />
           </div>
           <div className={classes.inputGroup}>
-            <InputLabel>unit</InputLabel>
-            <TextField
-              fullWidth
-              variant="outlined"
-              type="text"
-              value={currentIngred?.unit}
-              onChange={(e) => changeIngredHandler(e.target.value, "unit")}
+            <InputLabel>Unit</InputLabel>
+            <Select
+              value={currentIngred?.amount}
+              onChange={(e) =>
+                changeIngredHandler(String(e.target.value), "unit")
+              }
               style={{ width: "7rem" }}
-            />
+            >
+              {units.map((el) => (
+                <MenuItem key={el} value={el}>
+                  {el}
+                </MenuItem>
+              ))}
+            </Select>
           </div>
           <div className={classes.inputGroup}>
             <InputLabel>amount</InputLabel>
@@ -218,10 +248,9 @@ const NewRecipe = () => {
             <label className={classes.sideLabel}>Recipe description</label>
             <TextareaAutosize
               onChange={(e) => setDescription(e.target.value)}
-              required
               minRows={5}
               value={description}
-              style={{ width: "40rem" }}
+              style={{ width: "40rem", fontSize: "1rem" }}
             />
           </div>
         </div>

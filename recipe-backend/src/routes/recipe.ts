@@ -33,7 +33,7 @@ const getImage = async (req: Request, res: Response) => {
     if (imgName === "default") {
       imgPath = path.join(
         __dirname,
-        `../../uploads/3b357f65b4c3c8cc11a0c124cc7f4be7`
+        `../../uploads/738bb0c5a5c01234028ec7105d1ceff3`
       );
     } else {
       imgPath = path.join(__dirname, `../../uploads/${imgName}`);
