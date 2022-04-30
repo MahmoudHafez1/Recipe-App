@@ -62,11 +62,13 @@ const create = async (req: Request, res: Response) => {
 
 const update = async (req: Request, res: Response) => {
   try {
-    const img = req.file;
     const recipe = {
       ...JSON.parse(req.body.data),
-      imgName: img ? img.filename : null,
     };
+    const img = req.file;
+    if (img) {
+      recipe.imgName = img.filename;
+    }
     const result = await Recipe.updateOne(
       { _id: req.params.id },
       {

@@ -92,6 +92,7 @@ const NewRecipe = () => {
         title,
         ingredients,
         description,
+        imgName,
       };
       const formData = new FormData();
       const files = imgRef?.current?.files;

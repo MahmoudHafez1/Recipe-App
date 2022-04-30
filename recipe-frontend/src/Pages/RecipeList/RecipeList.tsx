@@ -12,7 +12,7 @@ const RecipeList = () => {
       const result = await getAllRecipes();
       setRecipes(result);
     } catch {
-      alert("somethinw went wrong");
+      alert("something went wrong");
     }
   };
 

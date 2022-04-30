@@ -54,6 +54,7 @@ const RecipeDetails = () => {
             variant="contained"
             color="primary"
             onClick={() => navigate(`/edit/${id}`)}
+            style={{ marginRight: "1rem" }}
           >
             Edit
           </Button>

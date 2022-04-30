@@ -6,9 +6,6 @@
     justify-content: space-between;
     align-items: center;
 }
-.actions > * {
-    margin-left: 1rem;
-}
 .content {
     display: flex;
     justify-content: space-between;
