@@ -1,0 +1,64 @@
+.container {
+    position: relative;
+    width: 100%;
+    min-width: 200px;
+    max-width: 350px;
+    aspect-ratio: 1;
+    background-color: #fff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;    
+}
+
+.container:hover {
+    cursor: pointer;
+    background-color: var(--primary);
+    opacity: 0.8;
+    color: #fff;
+    box-shadow: rgba(47, 47, 47, 0.298) 0px 4px 16px 0px;
+}
+
+.imgCont {
+    width: 100%;
+    height: 75%;
+}
+.imgCont > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.infoCont {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 25%;
+    padding: 1.5rem 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.actionCont {
+    position: absolute;
+    right: 0.5rem;
+    top: 0;
+    text-align: right;
+}
+.actionToggle {
+    margin-top: -1rem;
+    font-size: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    color:#000;
+}
+.actionMenu {
+    border: 0.5px solid rgb(187, 187, 187);
+    background-color: #fff;
+    padding: 0.1rem 0.4rem;
+    color:rgb(156, 0, 0);
+    font-weight: 600;
+}
+.actionMenu:hover {
+    cursor: pointer;
+    background-color:rgb(194, 3, 3);
+    color:#fff;
+}

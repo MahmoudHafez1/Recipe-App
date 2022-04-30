@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, InputLabel, TextareaAutosize } from "@mui/material";
-import axios from "axios";
 
 import classes from "./NewRecipe.module.css";
-import { createRecipe } from "../../api/recipe";
-
-type Ingredient = {
-  name?: string;
-  unit?: string;
-  amount?: number;
-};
+import { createRecipe, Ingredient } from "../../api/recipe";
 
 const NewRecipe = () => {
   const [title, setTitle] = useState<String>();

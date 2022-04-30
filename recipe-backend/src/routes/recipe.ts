@@ -28,11 +28,18 @@ const getOne = async (req: Request, res: Response) => {
 
 const getImage = async (req: Request, res: Response) => {
   try {
-    let indexPath = path.join(
-      __dirname,
-      `../../uploads/${req.params.fileName}`
-    );
-    res.sendFile(indexPath);
+    const imgName = req.params.imgName;
+    let imgPath;
+    if (imgName === "default") {
+      imgPath = path.join(
+        __dirname,
+        `../../uploads/3b357f65b4c3c8cc11a0c124cc7f4be7`
+      );
+    } else {
+      imgPath = path.join(__dirname, `../../uploads/${imgName}`);
+    }
+
+    res.sendFile(imgPath);
   } catch (err) {
     throw new Error("cannot get image");
   }
@@ -78,7 +85,7 @@ const remove = async (req: Request, res: Response) => {
 
 router.get("/", getAll);
 router.get("/:id", getOne);
-router.get("/image/:fileName", getImage);
+router.get("/image/:imgName", getImage);
 router.post("/", upload.single("image"), create);
 router.patch("/:id", update);
 router.delete("/:id", remove);
