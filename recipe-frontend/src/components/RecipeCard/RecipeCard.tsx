@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 import classes from "./RecipeCard.module.css";
 import { getRecipeImage, deleteRecipe, Recipe } from "../../api/recipe";
-import { Button } from "@mui/material";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 interface IRecipe {
   recipe: Recipe;
@@ -14,17 +15,21 @@ const RecipeCard = ({ recipe, reload }: IRecipe) => {
   const [recipeImg, setRecipeImg] = useState<string>();
   const [showAction, setShowAction] = useState(false);
   const [showActionMenu, setShowActionMenu] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const fetchRecipeImg = async () => {
     try {
+      setLoading(true);
       const result = await getRecipeImage(
         recipe.imgName ? recipe.imgName : "default"
       );
       setRecipeImg(result);
     } catch {
       alert("something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,8 +46,8 @@ const RecipeCard = ({ recipe, reload }: IRecipe) => {
       alert("something went wrong");
     }
   };
-  if (!recipeImg) {
-    return <div>Loading</div>;
+  if (loading) {
+    return <LoadingSpinner />;
   }
   return (
     <div

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { RevolvingDot } from "react-loader-spinner";
+import { Button } from "@mui/material";
 
 import classes from "./RecipeDetails.module.css";
 import {
@@ -9,17 +11,19 @@ import {
   Recipe,
 } from "../../api/recipe";
 import IngredientTable from "../../components/IngredientTable/IngredientTable";
-import { Button } from "@mui/material";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const RecipeDetails = () => {
   const [recipe, setRecipe] = useState<Recipe>();
   const [recipeImg, setRecipeImg] = useState<string>();
+  const [loading, setLoading] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
   const fetchRecipe = async () => {
     try {
+      setLoading(true);
       const result = await getRecipe(String(id));
       setRecipe(result);
       const image = await getRecipeImage(
@@ -28,6 +32,8 @@ const RecipeDetails = () => {
       setRecipeImg(image);
     } catch {
       alert("something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,8 +49,10 @@ const RecipeDetails = () => {
       alert("something went wrong");
     }
   };
-
-  if (!recipe || !recipeImg) return <div>loading</div>;
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+  if (!recipe || !recipeImg) return <div>Recipe is not found</div>;
   return (
     <div className={classes.container}>
       <div className={classes.header}>
