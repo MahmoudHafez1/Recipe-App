@@ -15,7 +15,7 @@ const RecipeShema = new Schema({
     required: true,
   },
   description: String,
-  img_path: String,
+  imgName: String,
   ingredients: [IngredientShema],
 });
 

@@ -1,10 +1,14 @@
 import express, { Request, Response } from "express";
+import multer from "multer";
+import path from "path";
 
 import Recipe from "../models/recipe";
 
 const router = express.Router();
 
-const index = async (req: Request, res: Response) => {
+const upload = multer({ dest: "uploads/" });
+
+const getAll = async (req: Request, res: Response) => {
   try {
     const result = await Recipe.find();
     res.json(result);
@@ -13,22 +17,39 @@ const index = async (req: Request, res: Response) => {
   }
 };
 
-const create = async (req: Request, res: Response) => {
-  try {
-    const newRecipe = new Recipe(req.body);
-    const result = await newRecipe.save();
-    res.json(result);
-  } catch {
-    throw new Error("cannot create new recipe");
-  }
-};
-
-const current = async (req: Request, res: Response) => {
+const getOne = async (req: Request, res: Response) => {
   try {
     const result = await Recipe.findOne({ _id: req.params.id });
     res.json(result);
   } catch {
     throw new Error("cannot get current recipe");
+  }
+};
+
+const getImage = async (req: Request, res: Response) => {
+  try {
+    let indexPath = path.join(
+      __dirname,
+      `../../uploads/${req.params.fileName}`
+    );
+    res.sendFile(indexPath);
+  } catch (err) {
+    throw new Error("cannot get image");
+  }
+};
+
+const create = async (req: Request, res: Response) => {
+  try {
+    const img = req.file;
+    const recipe = {
+      ...JSON.parse(req.body.data),
+      imgName: img ? img.filename : null,
+    };
+    const newRecipe = new Recipe(recipe);
+    const result = await newRecipe.save();
+    res.json(result);
+  } catch (err) {
+    throw new Error("cannot create new Recipe");
   }
 };
 
@@ -55,10 +76,11 @@ const remove = async (req: Request, res: Response) => {
   }
 };
 
-router.route("/").get(index);
-router.route("/:id").get(current);
-router.route("/").post(create);
-router.route("/:id").patch(update);
-router.route("/:id").delete(remove);
+router.get("/", getAll);
+router.get("/:id", getOne);
+router.get("/image/:fileName", getImage);
+router.post("/", upload.single("image"), create);
+router.patch("/:id", update);
+router.delete("/:id", remove);
 
 export default router;

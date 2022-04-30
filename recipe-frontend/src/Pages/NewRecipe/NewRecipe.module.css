@@ -1,0 +1,54 @@
+.container {
+    text-align: left;
+}
+
+.row {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+}
+
+.inputGroup {
+    text-align: left;
+    margin-right: 1rem;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload {
+    border: 1px solid #ccc;
+    margin-right: 1rem;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.upload:hover {
+    background-color: var(--secondary);
+    color:#fff;
+}
+
+.sideLabel {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.imgName {
+    padding: 0.5rem 1rem;
+    border: 1px dashed #000;
+}
+.remove {
+    color: rgb(190, 0, 0);
+    padding: 0 0.3rem;
+    cursor: pointer;
+}
+.addIng {
+    padding: 1rem 0.5rem;
+}
+  

@@ -1,7 +1,9 @@
 import React from 'react';
 import {Route, Routes, BrowserRouter} from 'react-router-dom'
+import { ThemeProvider } from "@mui/material/styles";
 
 import './App.css';
+import theme from "./UI/theme";
 import Navbar from './components/Navbar/Navbar';
 import RecipeList from './Pages/RecipeList/RecipeList';
 import RecipeDetails from './Pages/RecipeDetails/RecipeDetails';
@@ -9,8 +11,9 @@ import NewRecipe from './Pages/NewRecipe/NewRecipe';
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
+    <ThemeProvider theme={theme}>
+       <div className="App">
+        <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<RecipeList />}>
@@ -22,7 +25,9 @@ function App() {
         </Routes>
       </BrowserRouter>
      
-    </div>
+      </div>
+    </ThemeProvider>
+   
   );
 }
 

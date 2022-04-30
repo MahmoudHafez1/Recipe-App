@@ -17,3 +17,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+/* Default Table Style */
+table {
+  color: #333;
+  background: white;
+  border: 1px solid grey;
+  font-size: 12pt;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+table thead th,
+table tfoot th {
+  color: #fff;
+  background: var(--secondary);
+}
+table caption {
+  padding:.5em;
+}
+table th,
+table td {
+  padding: 0.5rem;
+  border: 1px solid lightgrey;
+}
