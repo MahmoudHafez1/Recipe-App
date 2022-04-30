@@ -12,7 +12,7 @@ export type Recipe = {
   _id: string;
   title: string;
   description?: string;
-  ingredients?: Ingredient[];
+  ingredients: Ingredient[];
   imgName?: string;
 };
 
@@ -62,5 +62,17 @@ export const deleteRecipe = async (_id: string) => {
     await axios.delete(`${host}/recipe/${_id}`);
   } catch {
     throw new Error("cannot delete Recipe");
+  }
+};
+
+export const updateRecipe = async (id: string, formData: FormData) => {
+  try {
+    await axios.put(`${host}/recipe/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  } catch {
+    throw new Error("cannot create Recipe");
   }
 };

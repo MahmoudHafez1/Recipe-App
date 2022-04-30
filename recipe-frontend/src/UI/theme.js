@@ -10,6 +10,9 @@ const theme = createTheme({
     secondary: {
       main: Colors.secondary,
     },
+    warning: {
+      main: "#D0342C",
+    },
   },
 });
 

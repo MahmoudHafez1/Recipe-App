@@ -1,18 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button, InputLabel, TextareaAutosize } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 import classes from "./NewRecipe.module.css";
-import { createRecipe, Ingredient } from "../../api/recipe";
+import {
+  createRecipe,
+  Ingredient,
+  getRecipe,
+  updateRecipe,
+} from "../../api/recipe";
+import IngredientTable from "../../components/IngredientTable/IngredientTable";
 
 const NewRecipe = () => {
-  const [title, setTitle] = useState<String>();
+  const [title, setTitle] = useState<string>();
   const [ingredients, setIngredients] = useState<Ingredient[]>();
   const [currentIngred, setCurrentIngred] = useState<Ingredient>();
   const [addIngBtn, setAddIngBtn] = useState(false);
-  const [description, setDescription] = useState<String>();
-  const [imgName, setImgName] = useState<String>();
+  const [description, setDescription] = useState<string>();
+  const [imgName, setImgName] = useState<string>();
 
   const imgRef = React.createRef<HTMLInputElement>();
+
+  const { id } = useParams();
+
+  const fetchRecipe = async () => {
+    try {
+      const recipe = await getRecipe(String(id));
+      setTitle(recipe.title);
+      setIngredients(recipe.ingredients);
+      setDescription(recipe.description);
+      setImgName(recipe.imgName);
+    } catch {
+      alert("something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchRecipe();
+    }
+  }, [id]);
 
   const changeIngredHandler = (value: string, key: string) => {
     setCurrentIngred((ing) => {
@@ -72,13 +99,17 @@ const NewRecipe = () => {
         formData.append("image", files[0]);
       }
       formData.append("data", JSON.stringify(recipe));
-      await createRecipe(formData);
-      alert("Recipe created successfully");
+      if (id) {
+        await updateRecipe(id, formData);
+        alert("Recipe updated successfully");
+      } else {
+        await createRecipe(formData);
+        alert("Recipe created successfully");
+      }
     } catch {
       alert("something went wrong");
     }
   };
-
   return (
     <div className={classes.container}>
       <form onSubmit={(e) => submitHandler(e)}>
@@ -129,28 +160,11 @@ const NewRecipe = () => {
         <label className={classes.sideLabel}>Ingredients</label>
         <div className={classes.ingredientList}>
           {ingredients && (
-            <table>
-              <thead>
-                <tr>
-                  <th>name</th>
-                  <th>unit</th>
-                  <th>amount</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {ingredients.map((ing, index) => (
-                  <tr key={index}>
-                    <td>{ing.name}</td>
-                    <td>{ing.unit}</td>
-                    <td>{ing.amount}</td>
-                    <td onClick={() => removeIngredHandler(String(ing.name))}>
-                      <span className={classes.remove}>remove</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <IngredientTable
+              ingredients={ingredients}
+              edit
+              removeHandler={removeIngredHandler}
+            />
           )}
         </div>
 
@@ -188,7 +202,7 @@ const NewRecipe = () => {
             />
           </div>
           <Button
-            className={classes.addIng}
+            style={{ padding: "1rem 0.5rem" }}
             onClick={addIngredHandler}
             variant="contained"
             color="secondary"
@@ -205,6 +219,7 @@ const NewRecipe = () => {
               onChange={(e) => setDescription(e.target.value)}
               required
               minRows={5}
+              value={description}
               style={{ width: "40rem" }}
             />
           </div>

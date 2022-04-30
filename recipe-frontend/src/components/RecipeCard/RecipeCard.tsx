@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./RecipeCard.module.css";
 import { getRecipeImage, deleteRecipe, Recipe } from "../../api/recipe";
+import { Button } from "@mui/material";
 
 interface IRecipe {
   recipe: Recipe;
@@ -12,6 +14,8 @@ const RecipeCard = ({ recipe, reload }: IRecipe) => {
   const [recipeImg, setRecipeImg] = useState<string>();
   const [showAction, setShowAction] = useState(false);
   const [showActionMenu, setShowActionMenu] = useState(false);
+
+  const navigate = useNavigate();
 
   const fetchRecipeImg = async () => {
     try {
@@ -37,7 +41,9 @@ const RecipeCard = ({ recipe, reload }: IRecipe) => {
       alert("something went wrong");
     }
   };
-
+  if (!recipeImg) {
+    return <div>Loading</div>;
+  }
   return (
     <div
       className={classes.container}
@@ -46,15 +52,18 @@ const RecipeCard = ({ recipe, reload }: IRecipe) => {
         setShowAction(false);
         setShowActionMenu(false);
       }}
+      onClick={() => navigate(recipe._id)}
     >
-      {recipeImg && (
-        <div className={classes.imgCont}>
-          <img src={recipeImg} />
-        </div>
-      )}
+      <div className={classes.imgCont}>
+        <img src={recipeImg} />
+      </div>
+
       <div className={classes.infoCont}>{recipe.title}</div>
       {showAction && (
-        <div className={classes.actionCont}>
+        <div
+          className={classes.actionCont}
+          onClick={(e) => e.stopPropagation()}
+        >
           <div
             className={classes.actionToggle}
             onClick={() => setShowActionMenu((state) => !state)}
@@ -62,9 +71,9 @@ const RecipeCard = ({ recipe, reload }: IRecipe) => {
             ...
           </div>
           {showActionMenu && (
-            <div className={classes.actionMenu} onClick={deleteHandler}>
+            <Button variant="contained" color="warning" onClick={deleteHandler}>
               delete
-            </div>
+            </Button>
           )}
         </div>
       )}
