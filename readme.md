@@ -4,15 +4,20 @@ where you can create, save, update your recipes.
 
 ## Setup
 
+(Node V16.13.1)
 install backend dependencies -> go to projectDir/recipe-backend
 
 ```
+npm install
+or
 yarn install
 ```
 
 install frontend dependencies -> go to projectDir/recipe-frontend
 
 ```
+npm install
+or
 yarn install
 ```
 
@@ -21,12 +26,16 @@ yarn install
 Run backend on localhost:5000 -> go to projectDir/recipe-backend
 
 ```
+npm start
+or
 yarn start
 ```
 
 Run frontend on localhost:3000 -> go to projectDir/recipe-frontend
 
 ```
+npm start
+or
 yarn start
 ```
 
