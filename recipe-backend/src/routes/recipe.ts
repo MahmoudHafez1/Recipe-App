@@ -13,7 +13,7 @@ const getAll = async (req: Request, res: Response) => {
     const result = await Recipe.find();
     res.json(result);
   } catch {
-    throw new Error("cannot get recipe list");
+    res.status(400).send("something went wrong");
   }
 };
 
@@ -22,7 +22,7 @@ const getOne = async (req: Request, res: Response) => {
     const result = await Recipe.findOne({ _id: req.params.id });
     res.json(result);
   } catch {
-    throw new Error("cannot get current recipe");
+    res.status(400).send("something went wrong");
   }
 };
 
@@ -41,7 +41,7 @@ const getImage = async (req: Request, res: Response) => {
 
     res.sendFile(imgPath);
   } catch (err) {
-    throw new Error("cannot get image");
+    res.status(400).send("something went wrong");
   }
 };
 
@@ -56,7 +56,7 @@ const create = async (req: Request, res: Response) => {
     const result = await newRecipe.save();
     res.json(result);
   } catch (err) {
-    throw new Error("cannot create new Recipe");
+    res.status(400).send("something went wrong");
   }
 };
 
@@ -77,7 +77,7 @@ const update = async (req: Request, res: Response) => {
     );
     res.json(result);
   } catch {
-    throw new Error("cannot get current recipe");
+    res.status(400).send("something went wrong");
   }
 };
 
@@ -86,7 +86,7 @@ const remove = async (req: Request, res: Response) => {
     const result = await Recipe.deleteOne({ _id: req.params.id });
     res.json(result);
   } catch {
-    throw new Error("cannot delete current recipe");
+    res.status(400).send("something went wrong");
   }
 };
 
